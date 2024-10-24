@@ -9,17 +9,17 @@ const api = axios.create({
     },
 });
 
-api.interceptors.request.use((request)=>{
-    const accessToken = getCookie("accessToken")
-    if(accessToken){
-        request.headers["Authorization"] = `bearer ${accessToken}`
+api.interceptors.request.use((request) => {
+    const accessToken = getCookie("accessToken");
+    if (accessToken) {
+        request.headers["Authorization"] = `Bearer ${accessToken}`;
     }
-    return request
+    return request;
 },
-(error) =>{
-    return Promise.reject(error)
-}
-)
+(error) => {
+    return Promise.reject(error);
+});
+
 
 api.interceptors.response.use((response)=>{
     return response
