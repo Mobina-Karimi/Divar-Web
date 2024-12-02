@@ -31,6 +31,9 @@ function PostDetailsPage() {
 
   return (
     <div className={styles.detailsContainer}>
+        <div className={styles.imageSection}>
+            <img src={`${baseUrl}${post.images[0]}`} alt={post.options.title} />
+        </div>
         <div className={styles.infoSection}>
             <h1>{post.options.title}</h1>
             <p>
@@ -49,9 +52,6 @@ function PostDetailsPage() {
                 <span className={styles.content}>توضیحات:</span><br />
                 {post.options.content}
             </p>
-        </div>
-        <div className={styles.imageSection}>
-            <img src={`${baseUrl}${post.images[0]}`} alt={post.options.title} />
         </div>
     </div>
   );

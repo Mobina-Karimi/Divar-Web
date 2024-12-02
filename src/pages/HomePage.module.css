@@ -1,0 +1,80 @@
+/* حالت موبایل */
+@media (max-width: 768px) {
+  .homePage {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobileView .categoryDropdown {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .icon {
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .dropdownMenu {
+    display: block;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdownMenu div {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .dropdownMenu div:hover {
+    background-color: #f0f0f0;
+  }
+
+  .postsGrid {
+    display: grid;
+    grid-template-columns: 1fr; /* فقط یک ستون برای آگهی‌ها */
+    gap: 10px;
+    padding: 10px;
+    width: 100%; /* اطمینان از اینکه آگهی‌ها عرض کامل را می‌گیرند */
+  }
+
+  .postCard {
+    width: 100%; /* اطمینان از اینکه هر آگهی عرض کامل را می‌گیرد */
+    padding: 10px;
+    box-sizing: border-box;
+  }
+}
+
+/* حالت کامپیوتر */
+@media (min-width: 769px) {
+  .homePage {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .categoryDropdown {
+    display: none;
+  }
+
+  .postsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .postCard {
+    width: 32%; /* سه آگهی در هر ردیف */
+  }
+}
+

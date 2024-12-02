@@ -4,6 +4,7 @@ import { getCookie } from "utils/cookie";
 
 function MyDivarDropdown({ onLogout }) {
   const handleLoginClick = () => {
+    window.location.href = "/dashboard"
     const accessToken = getCookie("accessToken"); // بررسی وجود کوکی
     if (accessToken) {
       // اگر کوکی وجود داشت به داشبورد برو

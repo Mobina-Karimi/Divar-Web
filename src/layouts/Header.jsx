@@ -1,21 +1,130 @@
+// // // import { Link } from "react-router-dom";
+// // // import styles from "./Header.module.css";
+// // // import MyDivarDropdown from "components/templates/MyDivarDropdown";
+// // // // import UserMenu from "components/templates/UserMenu";
+
+// // // function Header({ searchQuery, setSearchQuery }) {
+// // //   return (
+// // //     <header className={styles.header}>
+// // //       <div>
+// // //         <Link to="/">
+// // //           <img src="divar.svg" className={styles.logo} />
+// // //         </Link>
+// // //         <span>
+// // //           <img src="location.svg" />
+// // //           <p>تهران</p>
+// // //         </span>
+// // //       </div>
+// // //       <div>
+// // //         <input
+// // //           type="text"
+// // //           placeholder="جستجو در همه آگهی ها"
+// // //           value={searchQuery}
+// // //           onChange={(e) => setSearchQuery(e.target.value)}
+// // //           className={styles.searchBox}
+// // //         />
+// // //       </div>
+// // //       <div>
+// // //       <Link to="/auth">
+// // //           <span>
+// // //             <img src="profile.svg" />
+// // //             <p>دیوار من</p>
+// // //           </span>
+// // //           {/* <MyDivarDropdown/> */}
+// // //         </Link>
+// // //         <Link to="/dashboard" className={styles.button}>ثبت آگهی</Link>
+// // //       </div>
+// // //     </header>
+// // //   );
+// // // }
+
+// // // export default Header;
+
+
+
+// // import { useState } from "react";
+// // import { Link } from "react-router-dom";
+// // import styles from "./Header.module.css";
+// // import MyDivarDropdown from "components/templates/MyDivarDropdown";
+
+// // function Header({ searchQuery, setSearchQuery }) {
+// //   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+// //   const handleLogout = () => {
+// //     // پاک کردن کوکی‌ها
+// //     document.cookie = "accessToken=; max-age=0; path=/"; // پاک کردن کوکی
+// //     document.cookie = "refreshToken=; max-age=0; path=/"; // پاک کردن کوکی
+// //     window.location.href = "/"; // انتقال به صفحه اصلی
+// //   };
+
+// //   return (
+// //     <header className={styles.header}>
+// //       <div>
+// //         <Link to="/">
+// //           <img src="divar.svg" className={styles.logo} />
+// //         </Link>
+// //         <span className={styles.location}>
+// //           <img src="location.svg" />
+// //           <p>تهران</p>
+// //         </span>
+// //       </div>
+// //       <div>
+// //         <input
+// //           type="text"
+// //           placeholder="جستجو در همه آگهی ها"
+// //           value={searchQuery}
+// //           onChange={(e) => setSearchQuery(e.target.value)}
+// //           className={styles.searchBox}
+// //         />
+// //       </div>
+// //       <div>
+// //         <span onClick={() => setDropdownVisible(!dropdownVisible)}>
+// //           <img src="profile.svg" />
+// //           <p>دیوار من</p>
+// //         </span>
+// //         {dropdownVisible && (
+// //           <MyDivarDropdown onLogout={handleLogout} />
+// //         )}
+// //         <Link to="/dashboard" className={styles.button}>ثبت آگهی</Link>
+// //       </div>
+// //     </header>
+// //   );
+// // }
+
+// // export default Header;
+
+
+
+
+
+
+// import { useState } from "react";
 // import { Link } from "react-router-dom";
 // import styles from "./Header.module.css";
 // import MyDivarDropdown from "components/templates/MyDivarDropdown";
-// // import UserMenu from "components/templates/UserMenu";
 
 // function Header({ searchQuery, setSearchQuery }) {
+//   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+//   const handleLogout = () => {
+//     // پاک کردن کوکی‌ها
+//     document.cookie = "accessToken=; max-age=0; path=/"; // پاک کردن کوکی
+//     document.cookie = "refreshToken=; max-age=0; path=/"; // پاک کردن کوکی
+//     window.location.href = "/"; // انتقال به صفحه اصلی
+//   };
+
 //   return (
 //     <header className={styles.header}>
-//       <div>
+//       <div className={styles.leftSection}>
 //         <Link to="/">
 //           <img src="divar.svg" className={styles.logo} />
 //         </Link>
-//         <span>
+//         <span className={styles.location}>
 //           <img src="location.svg" />
 //           <p>تهران</p>
 //         </span>
 //       </div>
-//       <div>
+//       <div className={styles.searchSection}>
 //         <input
 //           type="text"
 //           placeholder="جستجو در همه آگهی ها"
@@ -24,14 +133,14 @@
 //           className={styles.searchBox}
 //         />
 //       </div>
-//       <div>
-//       <Link to="/auth">
-//           <span>
-//             <img src="profile.svg" />
-//             <p>دیوار من</p>
-//           </span>
-//           {/* <MyDivarDropdown/> */}
-//         </Link>
+//       <div className={styles.rightSection}>
+//         <span onClick={() => setDropdownVisible(!dropdownVisible)} className={styles.profileButton}>
+//           <img src="profile.svg" />
+//           <p>دیوار من</p>
+//         </span>
+//         {dropdownVisible && (
+//           <MyDivarDropdown onLogout={handleLogout} />
+//         )}
 //         <Link to="/dashboard" className={styles.button}>ثبت آگهی</Link>
 //       </div>
 //     </header>
@@ -42,50 +151,76 @@
 
 
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import MyDivarDropdown from "components/templates/MyDivarDropdown";
 
 function Header({ searchQuery, setSearchQuery }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // بستن منو با کلیک خارج از آن
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = () => {
-    // پاک کردن کوکی‌ها
-    document.cookie = "accessToken=; max-age=0; path=/"; // پاک کردن کوکی
-    document.cookie = "refreshToken=; max-age=0; path=/"; // پاک کردن کوکی
-    window.location.href = "/"; // انتقال به صفحه اصلی
+    // پاک کردن کوکی‌ها و انتقال به صفحه اصلی
+    document.cookie = "accessToken=; max-age=0; path=/";
+    document.cookie = "refreshToken=; max-age=0; path=/";
+    window.location.href = "/";
   };
 
   return (
     <header className={styles.header}>
-      <div>
+      <div className={styles.leftSection}>
         <Link to="/">
-          <img src="divar.svg" className={styles.logo} />
+          <img src="divar.svg" className={styles.logo} alt="دیوار" />
         </Link>
-        <span>
-          <img src="location.svg" />
+        <span className={styles.location}>
+          <img src="location.svg" alt="لوکیشن" />
           <p>تهران</p>
         </span>
       </div>
-      <div>
+
+      <div className={styles.searchSection}>
         <input
           type="text"
-          placeholder="جستجو در همه آگهی ها"
+          placeholder="جستجو در همه آگهی‌ها"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchBox}
         />
       </div>
-      <div>
-        <span onClick={() => setDropdownVisible(!dropdownVisible)}>
-          <img src="profile.svg" />
+
+      <div className={styles.rightSection}>
+        <span
+          onClick={() => setDropdownVisible(!dropdownVisible)}
+          className={styles.profileButton}
+        >
+          <img src="profile.svg" alt="پروفایل" />
           <p>دیوار من</p>
         </span>
+
         {dropdownVisible && (
-          <MyDivarDropdown onLogout={handleLogout} />
+          <div ref={dropdownRef}>
+            <MyDivarDropdown onLogout={handleLogout} />
+          </div>
         )}
-        <Link to="/dashboard" className={styles.button}>ثبت آگهی</Link>
+
+        <Link to="/dashboard" className={styles.button}>
+          ثبت آگهی
+        </Link>
       </div>
     </header>
   );
