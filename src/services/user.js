@@ -15,10 +15,6 @@ const getProfile = () =>
 );
 
 
-
-
-
-
 const getPosts = () => api.get("post/my")
 
 const getAllPosts = () => api.get("")
