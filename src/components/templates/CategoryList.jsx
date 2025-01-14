@@ -18,7 +18,6 @@ function CategoryList() {
                 const category = data.data.find((i) => i._id === variables);
                 setDeletedCategory(category.name);
                 
-                // Reset deletedCategory after 3 seconds
                 setTimeout(() => {
                     setDeletedCategory(null);
                 }, 3000);
@@ -57,4 +56,3 @@ function CategoryList() {
 }
 
 export default CategoryList;
-

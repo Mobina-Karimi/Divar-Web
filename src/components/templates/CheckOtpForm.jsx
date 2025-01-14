@@ -26,20 +26,6 @@ function CheckOtpForm({code, setCode, setStep, mobile}) {
     }
     if(error) console.log(error.response.data.message)
   };
-//   const submitHandler = async (event) => {
-//     event.preventDefault();
-
-//     if (code.length !== 5) return;
-
-//     const {response, error} = await checkOtp(mobile, code);
-
-//     if (response) {
-//         setCookie(response.data);
-//         navigate("/");
-//         refetch();
-//     }
-//     if (error) console.log(error.response.data.message);
-// };
 
   return (
     <form onSubmit={submitHandler} className={styles.form}>

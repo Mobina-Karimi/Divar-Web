@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import CheckOtpForm from "components/templates/CheckOtpForm.jsx";
 import SendOtpForm from "components/templates/SendOtpForm.jsx";
 

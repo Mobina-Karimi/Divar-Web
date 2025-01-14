@@ -1,73 +1,77 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import MyDivarDropdown from "components/templates/MyDivarDropdown";
+import MyDivarDropdown from "components/modules/MyDivarDropdown";
 
 function Header({ searchQuery, setSearchQuery }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const dropdownRef = useRef(null);
-
-  // بستن منو با کلیک خارج از آن
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const dropdownRef = useRef(null); // رفرنس به دراپ‌داون
+  const profileButtonRef = useRef(null); // رفرنس به دکمه پروفایل
 
   const handleLogout = () => {
-    // پاک کردن کوکی‌ها و انتقال به صفحه اصلی
     document.cookie = "accessToken=; max-age=0; path=/";
     document.cookie = "refreshToken=; max-age=0; path=/";
     window.location.href = "/";
   };
 
+  const handleClickOutside = (e) => {
+    // بررسی اینکه آیا کلیک خارج از دراپ‌داون و دکمه پروفایل است
+    if (
+      dropdownRef.current && 
+      !dropdownRef.current.contains(e.target) && 
+      !profileButtonRef.current.contains(e.target)
+    ) {
+      setDropdownVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    // افزودن رویداد کلیک به window
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      // حذف رویداد هنگام پاک کردن کامپوننت
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className={styles.header}>
-      <div className={styles.leftSection}>
+      <div className={styles.rightSection}>
         <Link to="/">
-          <img src="divar.svg" className={styles.logo} alt="دیوار" />
+          <img src="divar.svg" className={styles.logo} />
         </Link>
         <span className={styles.location}>
-          <img src="location.svg" alt="لوکیشن" />
+          <img src="location.svg" />
           <p>تهران</p>
         </span>
       </div>
-
-      <div className={styles.searchSection}>
+      <div>
         <input
           type="text"
-          placeholder="جستجو در همه آگهی‌ها"
+          placeholder="جستجو در همه آگهی ها"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchBox}
         />
       </div>
-
-      <div className={styles.rightSection}>
+      <div className={styles.leftSection}>
         <span
-          onClick={() => setDropdownVisible(!dropdownVisible)}
-          className={styles.profileButton}
-        >
-          <img src="profile.svg" alt="پروفایل" />
+          ref={profileButtonRef}
+          onClick={(e) => {
+            e.stopPropagation(); // جلوگیری از بسته شدن دراپ‌داون هنگام کلیک روی دکمه پروفایل
+            setDropdownVisible(!dropdownVisible); // تغییر وضعیت دراپ‌داون
+          }}
+          className={styles.profileButton} >
+          <img src="profile.svg" />
           <p>دیوار من</p>
         </span>
-
         {dropdownVisible && (
-          <div ref={dropdownRef}>
+          <div ref={dropdownRef} className="dropdown">
             <MyDivarDropdown onLogout={handleLogout} />
           </div>
         )}
-
-        <Link to="/dashboard" className={styles.button}>
-          ثبت آگهی
-        </Link>
+        <Link to="/dashboard" className={styles.button}>ثبت آگهی</Link>
       </div>
     </header>
   );

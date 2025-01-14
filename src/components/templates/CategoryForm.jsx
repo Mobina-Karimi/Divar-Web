@@ -57,9 +57,10 @@ function CategoryForm() {
     };
 
     const handleDeleteAllPosts = () => {
-        if (window.confirm('آیا مطمئن هستید که می‌خواهید همه آگهی‌ها را حذف کنید؟')) {
-            deleteAllPostsMutate();
-        }
+        // if (window.confirm('آیا مطمئن هستید که می‌خواهید همه آگهی‌ها را حذف کنید؟')) {
+        //     deleteAllPostsMutate();
+        // }
+        deleteAllPostsMutate();
     };
 
     return (
@@ -99,7 +100,7 @@ function CategoryForm() {
 
             {/* دکمه حذف همه آگهی‌ها */}
             <div className={styles.adminPanel}>
-                <h3>حذف تمام آگهی ها</h3>
+                <h3>حذف همه آگهی ها</h3>
                 {!!deleteError && <p>مشکلی پیش آمده است: {deleteError.message}</p>}
                 <button onClick={handleDeleteAllPosts} disabled={isDeletingPosts}>
                     {isDeletingPosts ? 'در حال حذف...' : 'حذف همه آگهی‌ها'}

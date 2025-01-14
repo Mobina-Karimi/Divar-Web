@@ -1,11 +1,11 @@
 .detailsContainer {
   display: flex;
-  align-items: flex-start; /* هم‌تراز کردن به بالا */
+  align-items: flex-start;
   margin: 50px;
   width: 100%;
 }
 
-/* بخش تصویر */
+
 .imageSection {
   flex: 1; /* نسبت به بخش دیگر انعطاف‌پذیر است */
   margin-right: 100px; /* فاصله بین تصویر و اطلاعات */
@@ -18,7 +18,6 @@
   padding-left: 100px;
 }
 
-/* بخش اطلاعات */
 .infoSection {
   flex: 1;
   display: flex;
@@ -55,19 +54,19 @@
 @media (max-width: 768px) {
   .detailsContainer {
     flex-direction: column; /* تغییر چیدمان به صورت عمودی */
-    margin: 20px; /* کاهش فاصله برای نمایش بهتر */
+    margin: 20px;
   }
 
   .imageSection {
-    margin-right: 0; /* حذف فاصله برای نمایش صحیح */
-    margin-bottom: 20px; /* فاصله پایین برای تصویر */
+    margin-right: 0; 
+    margin-bottom: 20px; 
   }
 
   .imageSection img {
-    padding-left: 0; /* حذف padding برای تصویر */
+    padding-left: 0; 
   }
 
   .infoSection {
-    padding-left: 0; /* حذف padding برای اطلاعات */
+    padding-left: 0; 
   }
 }

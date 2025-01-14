@@ -20,13 +20,10 @@ function Sidebar({ categories, selectedCategory, onCategorySelect }) {
               onCategorySelect("همه"); // انتخاب دسته‌بندی "همه"
             }}
           >
-            {/* به جای آیکون از خط تیره استفاده می‌شود */}
-            {/* <span className={styles.icon}> - </span> */}
             نمایش همه
           </a>
         </li>
-
-        {/* نمایش سایر دسته‌بندی‌ها به صورت لینک‌های <a> */}
+        
         {categories.filter(category => category.name !== "همه").map((category) => (
           <li key={category._id || category.slug}>
             <a

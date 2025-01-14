@@ -13,7 +13,7 @@ function PostDetailsPage() {
     const fetchPostDetails = async () => {
       try {
         const response = await axios.get(`${baseUrl}post/${id}`);
-        console.log(response.data);
+        // console.log(response.data);
         setPost(response.data.post);
       } catch (error) {
         console.error('Failed to fetch post details:', error);

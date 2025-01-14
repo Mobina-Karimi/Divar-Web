@@ -5,114 +5,77 @@ import Sidebar from "components/templates/Sidebar";
 import { getAllPosts } from "services/user";
 import Loader from "components/modules/Loader";
 import { getCategory } from "services/admin";
-import Header from "layouts/Header";
 import styles from "./HomePage.module.css";
 
-// تعریف کلمات کلیدی برای هر دسته‌بندی
-const categoryKeywords = {
-  "املاک": ["خانه", "ملک", "مسکن"],
-  "خودرو": ["ماشین", "خودرو", "موتور"],
-  "کالای دیجیتال": ["ساعت", "موبایل", "تلفن همراه", "گوشی", "تلویزیون", "tv", "laptop", "لپتاپ", "کامپیوتر", "رایانه", "هوشمند", "لپ تاپ", "لبتاب", "لب تاب"],
-  "وسایل شخصی": ["ساعت", "لباس", "پیراهن", "شلوار", "کفش", "کیف", "مانتو", "ارابشی", "انگشتر", "گردنبند", "گوشواره"],
-  "سرگرمی": ["تور", "دوچرخه", "موسیقی", "ورزش", "اسباب بازی", "بلیط"],
-  "خدمات": ["شرکت", "اموزش", "تعمیرات", "تعمیر", "نصب", "سرویس", "مدل", "نظافت", "کار", "استخدام"],
-};
-
-function HomePage() {
-  const [searchQuery, setSearchQuery] = useState("");
+function HomePage({ searchQuery, setSearchQuery }) {
   const [selectedCategory, setSelectedCategory] = useState("همه");
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [categoryKeywords, setCategoryKeywords] = useState({}); // برای ذخیره کلمات کلیدی
 
-  // دریافت داده‌ها
   const { data: posts, isLoading: postLoading } = useQuery(["post-list"], getAllPosts);
   const { data: categories, isLoading: categoryLoading } = useQuery(["get-categories"], getCategory);
 
-  // به‌روزرسانی وضعیت موبایل در تغییر اندازه پنجره
+  // بارگذاری کلمات کلیدی از فایل JSON
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const loadCategoryKeywords = async () => {
+      const response = await fetch("/src/assets/files/categories.json"); // مسیر فایل JSON
+      const data = await response.json();
+      setCategoryKeywords(data); // ذخیره کلمات کلیدی در state
+    };
+
+    loadCategoryKeywords();
   }, []);
 
-  // آماده‌سازی لیست دسته‌بندی‌ها
   const categoryList = categories ? [...categories.data] : [];
   if (!categoryList.some(category => category.name === "همه")) {
     categoryList.unshift({ name: "همه", slug: "all" });
   }
 
-  // فیلتر آگهی‌ها بر اساس جستجو و دسته‌بندی
+  // تابع برای استخراج دسته‌بندی از عنوان و توضیحات آگهی
+  const extractCategory = (title, description) => {
+    const allText = (title + " " + description).toLowerCase();
+     
+    for (let category in categoryKeywords) {
+      if (categoryKeywords[category].some(word => allText.includes(word.toLowerCase()))) {
+        return category;
+      }
+    }
+    return "دسته‌بندی نامشخص";
+  };
+
+  // فیلتر کردن آگهی‌ها بر اساس عنوان، توضیحات و دسته‌بندی
   const filteredPosts = posts?.data?.posts.filter(post => {
     const title = post?.options?.title?.toLowerCase() || "";
     const description = post?.options?.description?.toLowerCase() || "";
-    const matchesSearch = title.includes(searchQuery.toLowerCase()) || description.includes(searchQuery.toLowerCase());
 
-    const matchesKeywords = Object.entries(categoryKeywords).some(([category, keywords]) => {
-      return selectedCategory === category &&
-             keywords.some(keyword => title.includes(keyword) || description.includes(keyword));
-    });
+    const category = extractCategory(title, description); // دریافت دسته‌بندی از عنوان و توضیحات
 
-    return (selectedCategory === "همه" || matchesKeywords) && matchesSearch;
+    const matchesCategory = selectedCategory === "همه" || category === selectedCategory; // بررسی تطابق دسته‌بندی
+    const matchesSearch = title.includes(searchQuery.toLowerCase()) || description.includes(searchQuery.toLowerCase()); // بررسی تطابق جستجو
+
+    return matchesCategory && matchesSearch; // فیلتر کردن بر اساس دسته‌بندی و جستجو
   });
 
-  // تغییر دسته‌بندی
   const handleCategoryChange = (categoryName) => {
     setSelectedCategory(categoryName);
-    setDropdownOpen(false);
   };
 
   return (
-    <>
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+    <div className={styles.homePage}>
       {(postLoading || categoryLoading) ? (
         <Loader />
       ) : (
-        <div className={styles.homePage}>
-          {isMobile ? (
-            <div className={styles.mobileView}>
-              <div className={styles.categoryDropdown}>
-                <select
-                  onChange={(e) => handleCategoryChange(e.target.value)}
-                  value={selectedCategory}
-                  className={styles.select}
-                >
-                  {categoryList.map((category) => (
-                    <option key={category.slug} value={category.name}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-                <div className={styles.icon} onClick={() => setDropdownOpen(!isDropdownOpen)}>
-                  {/* آیکون کشویی */}
-                </div>
-                {isDropdownOpen && (
-                  <div className={styles.dropdownMenu}>
-                    {categoryList.map((category) => (
-                      <div key={category.slug} onClick={() => handleCategoryChange(category.name)}>
-                        {category.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className={styles.postsGrid}>
-                <Main posts={{ data: { posts: filteredPosts } }} />
-              </div>
-            </div>
-          ) : (
-            <div style={{ display: "flex" }}>
-              <Sidebar
-                categories={categoryList}
-                selectedCategory={selectedCategory}
-                onCategorySelect={handleCategoryChange}
-              />
-              <Main posts={{ data: { posts: filteredPosts } }} />
-            </div>
-          )}
+        <div className={styles.pageContent}>
+          <Sidebar
+            categories={categoryList}
+            selectedCategory={selectedCategory}
+            onCategorySelect={handleCategoryChange}
+          />
+          <Main posts={{ data: { posts: filteredPosts } }} />
         </div>
       )}
-    </>
+    </div>
   );
 }
 
 export default HomePage;
+

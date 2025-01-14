@@ -1,16 +1,16 @@
-import Footer from "./Footer"
-import Header from "./Header"
+import Header from "./Header";
+import Footer from "./Footer";
+import styles from "./Layout.module.css";
 
-import styles from "./Layout.module.css"
-
-function Layout({children}) {
+function Layout({ children, searchQuery, setSearchQuery }) {
   return (
     <>
-    <Header/>
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <div className={styles.main}>{children}</div>
-    <Footer/>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default Layout
+export default Layout;
+
