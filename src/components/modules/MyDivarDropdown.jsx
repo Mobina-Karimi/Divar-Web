@@ -12,7 +12,6 @@ function MyDivarDropdown({ onLogout }) {
       // اگر کوکی وجود داشت به داشبورد برو
       window.location.href = "/dashboard";
     } else {
-      // اگر کوکی وجود نداشت به صفحه ورود برو
       window.location.href = "/auth";
     }
   };
