@@ -2,8 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import MyDivarDropdown from "components/modules/MyDivarDropdown";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "services/user";
 
 function Header({ searchQuery, setSearchQuery }) {
+  const { data, isLoading, error } = useQuery(["profile"], getProfile);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null); // رفرنس به دراپ‌داون
   const profileButtonRef = useRef(null); // رفرنس به دکمه پروفایل
@@ -17,8 +20,8 @@ function Header({ searchQuery, setSearchQuery }) {
   const handleClickOutside = (e) => {
     // بررسی اینکه آیا کلیک خارج از دراپ‌داون و دکمه پروفایل است
     if (
-      dropdownRef.current && 
-      !dropdownRef.current.contains(e.target) && 
+      dropdownRef.current &&
+      !dropdownRef.current.contains(e.target) &&
       !profileButtonRef.current.contains(e.target)
     ) {
       setDropdownVisible(false);
@@ -26,11 +29,8 @@ function Header({ searchQuery, setSearchQuery }) {
   };
 
   useEffect(() => {
-    // افزودن رویداد کلیک به window
     window.addEventListener("click", handleClickOutside);
-
     return () => {
-      // حذف رویداد هنگام پاک کردن کامپوننت
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
@@ -68,7 +68,7 @@ function Header({ searchQuery, setSearchQuery }) {
         </span>
         {dropdownVisible && (
           <div ref={dropdownRef} className="dropdown">
-            <MyDivarDropdown onLogout={handleLogout} />
+            <MyDivarDropdown onLogout={handleLogout} userData={data && data.data} />
           </div>
         )}
         <Link to="/dashboard" className={styles.button}>ثبت آگهی</Link>

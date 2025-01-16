@@ -14,7 +14,7 @@
 .option {
   padding: 10px 15px;
   cursor: pointer;
-  text-align: left;
+  text-align: start;
   white-space: nowrap;
   border-bottom: 1px solid rgba(128, 128, 128, 0.324);
 }

@@ -1,19 +1,23 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./MyDivarDropdown.module.css";
 import { getCookie } from "utils/cookie";
 
-function MyDivarDropdown({ onLogout }) {
-  
-  const handleLoginClick = () => {
-    window.location.href = "/dashboard"
+function MyDivarDropdown({ onLogout, userData }) {
+  const navigate = useNavigate();
 
-    const accessToken = getCookie("accessToken"); // بررسی وجود کوکی
+  const handleLoginClick = () => {
+    const accessToken = getCookie("accessToken");
     if (accessToken) {
       // اگر کوکی وجود داشت به داشبورد برو
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
     } else {
-      window.location.href = "/auth";
+      navigate("/auth");
     }
+  };
+
+  const handleAdminPanelClick = () => {
+    navigate("/admin");
   };
 
   return (
@@ -21,6 +25,11 @@ function MyDivarDropdown({ onLogout }) {
       <div className={styles.option} onClick={handleLoginClick}>
         ورود به حساب کاربری
       </div>
+      {userData && userData.role === "ADMIN" && ( // نمایش گزینه پنل ادمین اگر نقش کاربر ادمین باشد
+        <div className={styles.option} onClick={handleAdminPanelClick}>
+          ورود به پنل ادمین
+        </div>
+      )}
       <div className={styles.option} onClick={onLogout}>
         خروج از حساب کاربری
       </div>
