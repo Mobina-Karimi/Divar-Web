@@ -10,12 +10,18 @@
   justify-content: space-between;
 }
 
+.skeletonGrid {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
 @media (max-width: 768px) {
   .homePage {
-    flex-direction: column; /* در حالت موبایل، صفحه به صورت عمودی نمایش داده می‌شود */
+    flex-direction: column;
   }
 
   .pageContent {
-    flex-direction: column; /* محتوا در موبایل به صورت ستونی نمایش داده می‌شود */
+    flex-direction: column;
   }
 }

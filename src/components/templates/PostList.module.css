@@ -6,8 +6,8 @@
 }
 
 .list button {
-    background-color: #fff;
-    color: #a62626;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
     padding: 5px 15px;
     border-radius: 5px;
     font-size: 0.9rem;
@@ -17,7 +17,7 @@
 .post {
     display: flex;
     align-items: center;
-    border: 2px solid #eaeaea;
+    border: 1px solid var(--text-color);
     border-radius: 5px;
     margin: 10px 0;
     padding: 5px;
@@ -40,7 +40,7 @@
 
 .post span {
     font-size: 0.8rem;
-    color: gray;
+    color: var(--text-color);
 }
 
 .post .price {

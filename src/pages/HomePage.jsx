@@ -4,22 +4,25 @@ import Main from "components/templates/Main";
 import Sidebar from "components/templates/Sidebar";
 import { getAllPosts } from "services/user";
 import Loader from "components/modules/Loader";
+import SkeletonCard from "components/modules/SkeletonCard";
 import { getCategory } from "services/admin";
 import styles from "./HomePage.module.css";
 
 function HomePage({ searchQuery, setSearchQuery }) {
   const [selectedCategory, setSelectedCategory] = useState("همه");
-  const [categoryKeywords, setCategoryKeywords] = useState({}); // برای ذخیره کلمات کلیدی
+  const [categoryKeywords, setCategoryKeywords] = useState({});
 
   const { data: posts, isLoading: postLoading } = useQuery(["post-list"], getAllPosts);
   const { data: categories, isLoading: categoryLoading } = useQuery(["get-categories"], getCategory);
+  // const { data: categories, isLoading: categoryLoading } = useQuery(["get-categories"], getCategory,{
+  //   refetchInterval :3000
+  // });
 
-  // بارگذاری کلمات کلیدی از فایل JSON
   useEffect(() => {
     const loadCategoryKeywords = async () => {
-      const response = await fetch("/src/assets/files/categories.json"); // مسیر فایل JSON
+      const response = await fetch("/src/assets/files/categories.json");
       const data = await response.json();
-      setCategoryKeywords(data); // ذخیره کلمات کلیدی در state
+      setCategoryKeywords(data);
     };
 
     loadCategoryKeywords();
@@ -30,10 +33,9 @@ function HomePage({ searchQuery, setSearchQuery }) {
     categoryList.unshift({ name: "همه", slug: "all" });
   }
 
-  // تابع برای استخراج دسته‌بندی از عنوان و توضیحات آگهی
   const extractCategory = (title, description) => {
     const allText = (title + " " + description).toLowerCase();
-     
+
     for (let category in categoryKeywords) {
       if (categoryKeywords[category].some(word => allText.includes(word.toLowerCase()))) {
         return category;
@@ -42,17 +44,16 @@ function HomePage({ searchQuery, setSearchQuery }) {
     return "دسته‌بندی نامشخص";
   };
 
-  // فیلتر کردن آگهی‌ها بر اساس عنوان، توضیحات و دسته‌بندی
   const filteredPosts = posts?.data?.posts.filter(post => {
     const title = post?.options?.title?.toLowerCase() || "";
     const description = post?.options?.description?.toLowerCase() || "";
 
-    const category = extractCategory(title, description); // دریافت دسته‌بندی از عنوان و توضیحات
+    const category = extractCategory(title, description);
 
-    const matchesCategory = selectedCategory === "همه" || category === selectedCategory; // بررسی تطابق دسته‌بندی
-    const matchesSearch = title.includes(searchQuery.toLowerCase()) || description.includes(searchQuery.toLowerCase()); // بررسی تطابق جستجو
+    const matchesCategory = selectedCategory === "همه" || category === selectedCategory;
+    const matchesSearch = title.includes(searchQuery.toLowerCase()) || description.includes(searchQuery.toLowerCase());
 
-    return matchesCategory && matchesSearch; // فیلتر کردن بر اساس دسته‌بندی و جستجو
+    return matchesCategory && matchesSearch;
   });
 
   const handleCategoryChange = (categoryName) => {
@@ -62,7 +63,14 @@ function HomePage({ searchQuery, setSearchQuery }) {
   return (
     <div className={styles.homePage}>
       {(postLoading || categoryLoading) ? (
-        <Loader />
+        <>
+          <Loader />
+          <div className={styles.skeletonGrid}>
+            {[1, 2, 3, 4].map(n => (
+              <SkeletonCard key={n} />
+            ))}
+          </div>
+        </>
       ) : (
         <div className={styles.pageContent}>
           <Sidebar
@@ -78,4 +86,5 @@ function HomePage({ searchQuery, setSearchQuery }) {
 }
 
 export default HomePage;
+
 

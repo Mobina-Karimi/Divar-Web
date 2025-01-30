@@ -1,4 +1,12 @@
 :root {
+  --background-color: white;
+  --text-color: black;
+  --button-background-color: white;
+  --button-text-color: #a62626;
+  --button-border-color: #eaeaea;
+  --input-background-color: white;
+  --input-text-color: black;
+  --input-border-color: #eaeaea;
   font-family: "Vazir", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
@@ -9,6 +17,8 @@ body {
   max-width: 1400px;
   min-height: 100vh;
   padding: 10px;
+  background-color: var(--background-color);  
+  color: var(--text-color); 
 }
 
 * {
@@ -26,4 +36,7 @@ button,
 input,
 select {
   font-family: inherit;
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  border: 1px solid var(--input-border-color);
 }

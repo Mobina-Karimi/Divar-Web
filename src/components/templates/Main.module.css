@@ -3,22 +3,21 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 20px;
-    flex: 1 1 calc(100% - 20px)
+    flex: 1 1 calc(100% - 20px);
 }
 
 .card {
     width: 400px;
-    /* width: 40%; */
     display: flex;
     align-items: flex-start;
-    border: 1px solid #eaeaea;
+    border: 1px solid var(--button-border-color);
     margin: 10px;
     padding: 15px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-height: 200px;
     overflow: hidden;
-    box-sizing: border-box;
+    transition: transform 0.2s ease-in-out; 
 }
 
 .card img {
@@ -32,7 +31,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 .info div p {
@@ -46,21 +45,22 @@
 }
 
 .info button {
-    margin-top: 45px; 
+    margin-top: 45px;
     height: 35px;
     width: 100px;
     line-height: 30px;
     text-align: center;
     border-radius: 5px;
-    background-color: #fff;
-    color: #a62626;
-    /* padding: 5px 15px; */
+    background-color: var(--button-background-color); 
+    color: var(--button-text-color);
     font-size: 0.9rem;
     cursor: pointer;
+    border: 1px solid var(--button-border-color);
+    box-shadow: 2px 1px 1px var(--button-border-color);
 }
-@media (max-width: 768px){
-    .card{
-        /* width: 565px; */
+
+@media (max-width: 768px) {
+    .card {
         width: 100%;
     }
 }

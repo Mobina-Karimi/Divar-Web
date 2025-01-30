@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import styles from './PostDetailsPage.module.css';
 
 function PostDetailsPage() {
@@ -31,28 +32,35 @@ function PostDetailsPage() {
 
   return (
     <div className={styles.detailsContainer}>
-        <div className={styles.imageSection}>
-            <img src={`${baseUrl}${post.images[0]}`} alt={post.options.title} />
-        </div>
-        <div className={styles.infoSection}>
-            <h1>{post.options.title}</h1>
-            <p>
-                <span>قیمت: </span>
-                {post.amount.toLocaleString()} تومان
-            </p>
-            <p>
-                <span>آدرس: </span>
-                {post.options.city}
-            </p>
-            <p>
-                <span className={styles.phoneNumber}>شماره تلفن:</span><br />
-                {post.options.phoneNumber}
-            </p>
-            <p>
-                <span className={styles.content}>توضیحات:</span><br />
-                {post.options.content}
-            </p>
-        </div>
+      <div className={styles.imageSection}>
+        <motion.img
+          src={`${baseUrl}${post.images[0]}`}
+          alt={post.options.title}
+          loading="lazy"
+          whileHover={{ y: +10 , x : +10}}
+          transition={{ duration: 0.5 }}
+        />
+
+      </div>
+      <div className={styles.infoSection}>
+        <h1>{post.options.title}</h1>
+        <p>
+          <span>قیمت: </span>
+          {post.amount.toLocaleString()} تومان
+        </p>
+        <p>
+          <span>آدرس: </span>
+          {post.options.city}
+        </p>
+        <p>
+          <span className={styles.phoneNumber}>شماره تلفن:</span><br />
+          {post.options.phoneNumber}
+        </p>
+        <p>
+          <span className={styles.content}>توضیحات:</span><br />
+          {post.options.content}
+        </p>
+      </div>
     </div>
   );
 }

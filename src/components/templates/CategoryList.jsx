@@ -8,7 +8,11 @@ import { useState } from "react";
 function CategoryList() {
     const queryClient = useQueryClient();
     const [deletedCategory, setDeletedCategory] = useState(null);
-    const { data, isLoading } = useQuery(["get-categories"], getCategory);
+
+    // استفاده از refetchInterval برای به‌روزرسانی دوره‌ای داده‌ها
+    const { data, isLoading } = useQuery(["get-categories"], getCategory, {
+        refetchInterval: 3000, // به‌روزرسانی هر 3 ثانیه یک بار
+    });
 
     const { mutate: deleteCat, isLoading: isDeleting } = useMutation(
         (id) => deleteCategory(id),
@@ -17,7 +21,7 @@ function CategoryList() {
                 queryClient.invalidateQueries(["get-categories"]);
                 const category = data.data.find((i) => i._id === variables);
                 setDeletedCategory(category.name);
-                
+
                 setTimeout(() => {
                     setDeletedCategory(null);
                 }, 3000);

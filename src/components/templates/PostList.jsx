@@ -44,7 +44,7 @@ function PostList() {
                 {
                     data.data.posts.map(post => (
                         <div key={post._id} className={styles.post}>
-                            <img src={`${baseUrl}${post.images[0]}`}/>
+                            <img src={`${baseUrl}${post.images[0]}`} loading="lazy" />
                             <div>
                                 <p>{post.options.title}</p>
                                 <span>{post.options.content}</span>

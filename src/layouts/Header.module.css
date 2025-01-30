@@ -33,10 +33,10 @@
 }
 
 .searchBox {
-  border: 2px solid gray;
-  border: none;
+  border: 2px solid var(--input-border-color);
   box-sizing: border-box;
-  background-color: rgb(0, 0, 0, 0.12);
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
   width: 30rem;
   height: 40px;
   border-radius: 5px;

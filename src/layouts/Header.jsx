@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import MyDivarDropdown from "components/modules/MyDivarDropdown";
+import HeaderDropdown from "components/modules/HeaderDropdown";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "services/user";
 
@@ -68,7 +68,11 @@ function Header({ searchQuery, setSearchQuery }) {
         </span>
         {dropdownVisible && (
           <div ref={dropdownRef} className="dropdown">
-            <MyDivarDropdown onLogout={handleLogout} userData={data && data.data} />
+            <HeaderDropdown
+              onLogout={handleLogout}
+              userData={data && data.data}
+              setDropdownVisible={setDropdownVisible} // ارسال تابع برای بستن دراپ داون
+            />
           </div>
         )}
         <Link to="/dashboard" className={styles.button}>ثبت آگهی</Link>

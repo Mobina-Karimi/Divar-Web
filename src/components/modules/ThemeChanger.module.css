@@ -1,0 +1,30 @@
+:root[data-theme='dark'] {
+  --background-color: rgb(44, 43, 43);
+  --text-color: rgb(215, 215, 215);
+  --button-background-color: #333;
+  --button-text-color: rgb(215, 215, 215);
+  --button-border-color: #555;
+  --input-background-color: #333;
+  --input-text-color: rgb(215, 215, 215);
+  --input-border-color: #555;
+}
+
+.themeChanger button {
+  padding: 10px 20px;
+  margin-top: 5px;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: 2px solid var(--button-border-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color var(--button-background-color); 
+}
+
+.themeChanger button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
+
+.themeChanger button:active {
+    transform: scale(0.95); /* انیمیشن هنگام کلیک */
+}
