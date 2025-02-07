@@ -9,7 +9,6 @@ function CategoryList() {
     const queryClient = useQueryClient();
     const [deletedCategory, setDeletedCategory] = useState(null);
 
-    // استفاده از refetchInterval برای به‌روزرسانی دوره‌ای داده‌ها
     const { data, isLoading } = useQuery(["get-categories"], getCategory, {
         refetchInterval: 3000, // به‌روزرسانی هر 3 ثانیه یک بار
     });

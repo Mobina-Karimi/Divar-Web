@@ -44,7 +44,10 @@ function CategoryForm() {
     );
 
     const changeHandler = (event) => {
-        setForm({ ...form, [event.target.name]: event.target.value });
+        setForm({
+            ...form, // کپی تمام مقادیر موجود در شیء form
+            [event.target.name]: event.target.value // به‌روزرسانی مقدار ورودی تغییر کرده
+          });          
     };
 
     const submitHandler = (event) => {

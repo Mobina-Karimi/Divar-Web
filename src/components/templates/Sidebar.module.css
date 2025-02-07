@@ -13,3 +13,9 @@
     margin-right: 10px;
     color: gray;
 }
+.active {
+    background-color: #f0f0f08c;
+    width: 200px;
+    padding: 3px;
+    border-radius: 3px;
+}

@@ -4,7 +4,6 @@ import Main from "components/templates/Main";
 import Sidebar from "components/templates/Sidebar";
 import { getAllPosts } from "services/user";
 import Loader from "components/modules/Loader";
-import SkeletonCard from "components/modules/SkeletonCard";
 import { getCategory } from "services/admin";
 import styles from "./HomePage.module.css";
 
@@ -63,14 +62,7 @@ function HomePage({ searchQuery, setSearchQuery }) {
   return (
     <div className={styles.homePage}>
       {(postLoading || categoryLoading) ? (
-        <>
           <Loader />
-          <div className={styles.skeletonGrid}>
-            {[1, 2, 3, 4].map(n => (
-              <SkeletonCard key={n} />
-            ))}
-          </div>
-        </>
       ) : (
         <div className={styles.pageContent}>
           <Sidebar
