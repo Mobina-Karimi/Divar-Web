@@ -20,7 +20,7 @@ Divar-Web is your go-to web platform for online classified ads, designed with si
 
 <a href="https://www.w3schools.com/HTML/html_css.asp">CSS & HTML</a>
 
-<a href="https://github.com/milad-azami/rjs-divar-api">Axios for API requests</a> (With a few changes)
+<a href="https://github.com/Mobina-Karimi/Divar-Web-API">Axios for API requests</a>
 
 
 ## Contributing
