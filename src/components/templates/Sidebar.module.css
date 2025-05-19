@@ -1,0 +1,21 @@
+.sidebar {
+    margin-top: 30px;
+    width: 300px;
+}
+
+.sidebar li {
+    display: flex;
+    margin: 20px 0;
+}
+
+.sidebar li p {
+    font-weight: 200;
+    margin-right: 10px;
+    color: gray;
+}
+.active {
+    background-color: #f0f0f08c;
+    width: 200px;
+    padding: 3px;
+    border-radius: 3px;
+}
