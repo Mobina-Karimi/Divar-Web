@@ -2,6 +2,8 @@
 
 Divar-Web is your go-to web platform for online classified ads, designed with simplicity and efficiency in mind. Whether you're looking to post an ad, browse for something specific, or manage your listings, Divar-Web makes the process smooth and hassle-free.
 
+<img src="https://github.com/Mobina-Karimi/Divar-Web/blob/main/readmeImages/HomePage.png"/>
+
 ## Features
 <ul>
  <li>Post Advertisements: Quickly and effortlessly upload ads with titles, descriptions, and images to reach the right audience.</li>
