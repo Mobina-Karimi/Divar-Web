@@ -9,7 +9,7 @@
   --input-border-color: #555;
 }
 
-.themeChanger button {
+/*.themeChanger button {
   padding: 10px 20px;
   margin-top: 5px;
   background-color: var(--button-background-color);
@@ -26,5 +26,64 @@
 }
 
 .themeChanger button:active {
-    transform: scale(0.95); /* انیمیشن هنگام کلیک */
+    transform: scale(0.95); 
+} */
+
+/* globals.css یا index.css */
+
+
+.toggleWrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.toggleButton {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background-color: var(--button-background-color, #ccc);
+  border: 2px solid var(--button-border-color, #888);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  overflow: hidden;
+}
+
+.toggleButton .circle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background-color: var(--button-text-color, white);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.toggleButton .icon {
+  position: absolute;
+  right: 8px;
+  font-size: 14px;
+  z-index: 0;
+  color: var(--button-text-color, #333);
+}
+
+.toggleButton.dark {
+  background-color: var(--button-background-color, #333);
+  border-color: var(--button-border-color, #555);
+}
+
+.toggleButton.dark .icon {
+  left: 8px;
+  right: auto;
+}
+
+.toggleButton.dark .circle {
+  transform: translateX(30px);
 }
