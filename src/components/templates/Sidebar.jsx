@@ -47,6 +47,7 @@
 // export default Sidebar;
 
 
+
 import styles from "./Sidebar.module.css";
 
 function Sidebar({ categories, selectedCategory, onCategorySelect }) {
@@ -72,30 +73,36 @@ function Sidebar({ categories, selectedCategory, onCategorySelect }) {
           </a>
         </li>
 
-        {categories.map((category) => (
-          <li key={category._id}>
-            <a
-              href="#"
-              className={
-                selectedCategory === category._id ? styles.active : ""
-              }
-              onClick={(e) => {
-                e.preventDefault();
-                onCategorySelect(category._id);
-              }}
-            >
-              <img
-                src={`${category.icon}.svg`}
-                alt={category.name}
-                className={styles.icon}
-              />
-              {category.name}
-            </a>
-          </li>
-        ))}
+        {categories
+          .filter((category) => category.name !== "همه")
+          .map((category) => (
+            <li key={category._id || category.slug}>
+              <a
+                href="#"
+                className={
+                  selectedCategory === category.name
+                    ? styles.active
+                    : ""
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  onCategorySelect(category.name);
+                }}
+              >
+                <img
+                  src={`${category.icon}.svg`}
+                  alt={category.name}
+                  className={styles.icon}
+                />
+
+                {category.name}
+              </a>
+            </li>
+          ))}
       </ul>
     </div>
   );
 }
 
 export default Sidebar;
+

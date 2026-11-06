@@ -91,6 +91,8 @@ import { getAllPosts } from "services/user";
 import Loader from "components/modules/Loader";
 import { getCategory } from "services/admin";
 
+import categoryKeywords from "../assets/files/categories.json";
+
 import styles from "./HomePage.module.css";
 
 function HomePage({ searchQuery = "" }) {
@@ -106,28 +108,56 @@ function HomePage({ searchQuery = "" }) {
     getCategory
   );
 
+  // دریافت دسته‌بندی‌ها از API
   const categoryList = Array.isArray(categories?.data)
     ? categories.data
     : [];
 
+  // دریافت آگهی‌ها از API
   const postsList = Array.isArray(posts?.data?.posts)
     ? posts.data.posts
     : [];
 
-  const normalizedSearch = searchQuery.trim().toLowerCase();
+  // آماده‌سازی متن جست‌وجو
+  const normalizedSearch = String(searchQuery ?? "")
+    .trim()
+    .toLowerCase();
 
+  // تشخیص دسته‌بندی آگهی با استفاده از فایل categories.json
+  const extractCategory = (title, description) => {
+    const allText = `${title} ${description}`.toLowerCase();
+
+    for (const category in categoryKeywords) {
+      const keywords = categoryKeywords[category];
+
+      if (
+        Array.isArray(keywords) &&
+        keywords.some((word) =>
+          allText.includes(String(word).toLowerCase())
+        )
+      ) {
+        return category;
+      }
+    }
+
+    return "دسته‌بندی نامشخص";
+  };
+
+  // فیلتر آگهی‌ها بر اساس دسته‌بندی و جست‌وجو
   const filteredPosts = postsList.filter((post) => {
     const title = post?.options?.title?.toLowerCase() || "";
-    const content = post?.options?.content?.toLowerCase() || "";
+    const description = post?.options?.content?.toLowerCase() || "";
+
+    const category = extractCategory(title, description);
 
     const matchesCategory =
       selectedCategory === "همه" ||
-      String(post?.category) === String(selectedCategory);
+      category === selectedCategory;
 
     const matchesSearch =
       !normalizedSearch ||
       title.includes(normalizedSearch) ||
-      content.includes(normalizedSearch);
+      description.includes(normalizedSearch);
 
     return matchesCategory && matchesSearch;
   });
