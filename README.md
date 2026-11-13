@@ -1,24 +1,77 @@
-## Project Description
-Divar-Web is your go-to web platform for online classified ads, designed with simplicity and efficiency in mind. Whether you're looking to post an ad, browse for something specific, or manage your listings, Divar-Web makes the process smooth and hassle-free.
 
-<img src="https://github.com/Mobina-Karimi/Divar-Web/blob/main/readmeImages/HomePage.png"/>
+# Divar-Web
+
+A responsive online classifieds platform inspired by Divar, built with React.
+
+**Live Demo:** [Divar-Web](https://divar-web.vercel.app)
+
+## Preview
+
+<img src="https://github.com/Mobina-Karimi/Divar-Web/blob/main/readmeImages/HomePage.png" alt="Divar-Web Home Page" width="100%"/>
 
 ## Features
-<ul>
- <li>Post Advertisements: Quickly and effortlessly upload ads with titles, descriptions, and images to reach the right audience.</li>
- <li>Search Functionality: Easily find the perfect ad using keywords and categories filters.</li>
- <li>Responsive Design: Enjoy a seamless experience on both mobile and desktop devices.</li>
- <li>Admin Panel Management: Manage categories and advertisements efficiently with a user-friendly admin panel that keeps everything organized.</li>
- <li>Dark and Light Modes: Switch effortlessly between dark and light themes to suit your visual preferences and comfort.</li>
- <li>Otp:Strengthen security with a two-step verification system or one-time password (OTP) for enhanced login protection.</li>
-</ul>
+
+- Browse and view advertisements
+- Create and publish new ads
+- Search by keywords and categories
+- User authentication with OTP
+- User dashboard
+- Admin panel for managing ads and categories
+- Responsive design
+- Dark and light themes
 
 ## Technologies Used
-<a href="https://react.dev/">ReactJS</a>
 
-<a href="https://www.w3schools.com/HTML/html_css.asp">CSS & HTML</a>
+**Frontend:**
+- React.js
+- JavaScript
+- HTML5 & CSS3
+- React Router DOM
+- TanStack React Query
+- Axios
+- React Hot Toast
 
-<a href="https://github.com/Mobina-Karimi/Divar-Web-API">Axios for API requests</a>
+**Backend:**
+- Node.js & Express.js
+- MongoDB & Mongoose
+- JWT Authentication
 
-## Contributing
-If you would like to contribute to this repository, feel free to submit a pull request or open an issue. We welcome contributions from the community to make these projects even better!
+## Repositories
+
+- [Frontend](https://github.com/Mobina-Karimi/Divar-Web)
+- [Backend](https://github.com/Mobina-Karimi/Divar-Web-Backend)
+
+## Installation
+
+```bash
+git clone https://github.com/Mobina-Karimi/Divar-Web.git
+cd Divar-Web
+npm install
+```
+
+Create a `.env` file in the frontend root:
+
+```env
+VITE_BASE_URL=YOUR_BACKEND_API_URL
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+## Deployment
+
+- Frontend: [Vercel](https://vercel.com)
+- Backend: [Render](https://render.com)
+
+## Note
+
+OTP authentication is implemented, but real SMS delivery through an external SMS gateway is not currently integrated.
+
+## Author
+
+**Mobina Karimi**
+
+[GitHub](https://github.com/Mobina-Karimi)
